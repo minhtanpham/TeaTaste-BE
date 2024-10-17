@@ -1,10 +1,9 @@
-// models/User.js
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: false, // Make name optional
+    required: true,
   },
   email: {
     type: String,
@@ -17,14 +16,21 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["manager", "employee", "customer"],
-    default: "customer", // Default role
+    enum: ["guest", "registered", "admin"],
+    default: "registered",
   },
+  shippingAddress: {
+    street: String,
+    city: String,
+    postalCode: String,
+    country: String,
+  },
+  orders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+    },
+  ],
 });
-
-// Method to match passwords (without hashing)
-userSchema.methods.matchPassword = function (enteredPassword) {
-  return this.password === enteredPassword; // Simple comparison
-};
 
 module.exports = mongoose.model("User", userSchema);
