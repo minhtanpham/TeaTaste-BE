@@ -20,7 +20,6 @@ exports.createProduct = async (req, res) => {
     // Log request details
     console.log("Request Body:", req.body);
     console.log("Request File:", req.file);
-    console.log("req:", req);
 
     // Validate required fields
     if (!name || !description || !price || !category || !story || !req.file) {
@@ -30,8 +29,8 @@ exports.createProduct = async (req, res) => {
       });
     }
 
-    // Get image URL from the uploaded file
-    const imageUrl = req.file.path; // Note: Update this to get from Cloudinary after uploading
+    // Get image URL from Cloudinary
+    const imageUrl = req.file.path;
 
     const newProduct = new Product({
       name,
